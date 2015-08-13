@@ -8,7 +8,7 @@ town_density <- readRDS(file = "R/town_density")
 
 ui <- bootstrapPage(
     title = "South African Demographics",
-    # Add CSS to give floating Panels a style
+# Add CSS to give floating Panels a style
     tags$head(tags$style(".floater { background-color: white; 
                          padding: 8px; opacity: 0.7; border-radius: 6px; 
                          box-shadow: 0 0 15px rgba(0,0,0,0.2); }")),
@@ -80,9 +80,9 @@ server <- function(session, input, output) {
         gis$mouse_events <- 0
     })
     
-    #    observe(if (input$select_map_level == 'Ward'){label="event3"
-    #    gis$tj <- ward_tj_no_lines
-    #    })
+#    observe(if (input$select_map_level == 'Ward'){label="event3"
+#    gis$tj <- ward_tj_no_lines
+#    })
     observe(if (input$select_map_level == 'Municipality'){
         gis$tj <- town_tj
     })
@@ -132,53 +132,53 @@ server <- function(session, input, output) {
     observeEvent(input$map1_shape_mouseout, label="event10",{
         gis$id <- NULL
     })
-    #    observe(if (input$select_map_level == 'Ward'){label="event11"
-    #    gis$binpal <- ward_binpal
-    #    })
+#    observe(if (input$select_map_level == 'Ward'){label="event11"
+#    gis$binpal <- ward_binpal
+#    })
     observe(if (input$select_map_level == 'Municipality'){
         label="event12"
         gis$binpal <- town_binpal
     })
-    #    observe(if (input$select_map_level == 'Province'){label="event13"
-    #    gis$binpal <- province_binpal
-    #    })
+#    observe(if (input$select_map_level == 'Province'){label="event13"
+#    gis$binpal <- province_binpal
+#    })
     observeEvent(input$map1_topojson_mouseover, label="event14",{
         gis$slice1 <- input$map1_topojson_mouseover$properties$PROVINCE
     })
     observeEvent(input$map1_topojson_mouseover, label="event14b",{
         gis$slice2 <- input$map1_topojson_mouseover$properties$MAP_TITLE
     })
-    #    observeEvent(input$map1_topojson_mouseout, label="event15",{
-    #        gis$slice2 <- NULL
-    #    })
+#    observeEvent(input$map1_topojson_mouseout, label="event15",{
+#        gis$slice2 <- NULL
+#    })
     observeEvent(input$map1_shape_mouseover, label="event16a",{
         gis$slice1 <- gis$shp@data$PROVINCE[gis$shp@data$ID == gis$shp_mouseover_id]
     })
-    #     observeEvent(input$map1_shape_mouseover, label="event16b",{
-    #         if (input$select_mapl_level == 'Ward') {
-    #             gis$slice2 <- gis$shp@data$MUNICNAME[gis$shp@data$ID == gis$sh_mouseover_id]
-    #         }
-    #     })
+#     observeEvent(input$map1_shape_mouseover, label="event16b",{
+#         if (input$select_mapl_level == 'Ward') {
+#             gis$slice2 <- gis$shp@data$MUNICNAME[gis$shp@data$ID == gis$sh_mouseover_id]
+#         }
+#     })
     observe(if((!is.null(gis$shp_mouseover) & input$select_map_level == 'Municipality')){ 
         label="event16c"
         gis$slice2 <- town_tj_spd@data$MAP_TITLE[town_tj_spd@data$ID == gis$shp_mouseover_id]
     })
-    #    observeEvent(input$map1_shape_mouseout, label="event17",{
-    #        gis$slice1 <- NULL
-    #    })
+#    observeEvent(input$map1_shape_mouseout, label="event17",{
+#        gis$slice1 <- NULL
+#    })
     observeEvent(input$map1_shape_mouseover, label="event18a",{
         gis$shp_mouseover_id <- input$map1_shape_mouseover$id
     })
     observeEvent(input$map1_shape_mouseout, label="event18b",{
         gis$shp_mouseover_id <- NULL
     })
-    #    observeEvent(input$map1_topojson_mouseover, label="event18c",{
-    #        gis$shp_mouseover_id <- input$map1_topojson_mouseover$properties$ID
-    #    })
-    #    observe(if (is.null(input$map1_shape_mouseover$id) & gis$mouse_events == 0) {    
-    #        gis$shp_mouseover_id <- NULL
-    #        label="event18d"
-    #    })
+#    observeEvent(input$map1_topojson_mouseover, label="event18c",{
+#        gis$shp_mouseover_id <- input$map1_topojson_mouseover$properties$ID
+#    })
+#    observe(if (is.null(input$map1_shape_mouseover$id) & gis$mouse_events == 0) {    
+#        gis$shp_mouseover_id <- NULL
+#        label="event18d"
+#    })
     
     output$message_slice1 <- renderText(gis$slice1)
     output$message_slice2 <- renderText(gis$slice2)
@@ -274,9 +274,9 @@ server <- function(session, input, output) {
         proxy %>%
             clearShapes() %>%
             clearTopoJSON() %>%
-            #            clearGroup('town_tj') %>%
+#            clearGroup('town_tj') %>%
             addTopoJSON(
-                #                group='province_tj',
+#                group='province_tj',
                 topojson = gis$tj,stroke=T,dashArray=3,weight=2,color="white",
                 opacity=1,fill=T,smoothFactor = 0.5
             ) %>%
@@ -295,10 +295,10 @@ server <- function(session, input, output) {
         proxy %>%
             clearShapes() %>%
             clearTopoJSON() %>%
-            #            clearGroup('town_slice') %>%
-            #            clearGroup('province_tj') %>%
+#            clearGroup('town_slice') %>%
+#            clearGroup('province_tj') %>%
             addTopoJSON(
-                #                group = 'town_tj',
+#                group = 'town_tj',
                 topojson=town_tj,stroke=T,dashArray=3,weight=2,color="white",
                 opacity=1,fill=T,smoothFactor = 0.5
             )
@@ -319,7 +319,7 @@ server <- function(session, input, output) {
     
     observeEvent(input$map1_zoom, label="event20",{
         if ((v$msg3 > 8) & (!is.null(gis$slice1))) {
-            #label="zoom_effect"
+#label="zoom_effect"
             updateRadioButtons(
                 session, inputId = "select_map_level", 
                 choices = c('Province','Municipality', 'Ward'),
@@ -384,8 +384,8 @@ server <- function(session, input, output) {
     })
     
     observeEvent(gis$shp_mouseover_id,label="event22", {
-        #    observe(if (input$select_map_level == 'Ward' & (!is.null(gis$shp_mouseover_id))) {
-        #        label="event22"
+#    observe(if (input$select_map_level == 'Ward' & (!is.null(gis$shp_mouseover_id))) {
+#        label="event22"
         proxy <- leafletProxy(
             "map1", data = subset(
                 gis$shp, 
